@@ -1,5 +1,4 @@
-import { renderToHtml } from "./app.js";
-export const news = [
+const news = [
   {
     title: "Customizable encompassing extranet",
     description:
@@ -26,25 +25,15 @@ export const news = [
   },
 ];
 
-export async function resetLoad() {
+export async function getNews() {
   return new Promise((resolve, reject) => {
-    if (news)
-      resolve(() => {
-        loadingDisplay.classList.remove("hide");
-        display.innerHTML = ``;
-        setTimeout(() => {
-          loadingDisplay.classList.add("hide");
-          renderToHtml();
-        }, 5000);
-      });
-    else
-      reject(() => {
-        loadingDisplay.classList.remove("hide");
-        display.innerHTML = ``;
-        setTimeout(() => {
-          loadingDisplay.classList.add("hide");
-          display.innerHTML = ``;
-        }, 5000);
-      });
+    const check = Math.ceil(Math.random * 6) % 6 !== 0;
+    setTimeout(() => {
+      if (check) {
+        resolve({ status: true, data: news });
+      } else {
+        reject({ status: false, error: "" });
+      }
+    }, 2000);
   });
 }
